@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 @Configuration
 @ComponentScan("com.app")
 public class AppBeansConfig {
-
     @Bean
     public Gson gson() {
         return new GsonBuilder()
