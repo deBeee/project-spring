@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -20,6 +21,12 @@ public class JsonFileToCarsConverterImpl implements FileToCarsConverter {
 
     @Override
     public List<Car> convert(String filename) {
-        return null;
+        return carsDataJsonDeserializer
+                .fromJson(filename)
+                .cars()
+                .stream()
+                .filter(carData -> Validator.validate(carData, carDataValidator))
+                .map(CarData::toCar)
+                .toList();
     }
 }
