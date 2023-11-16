@@ -28,3 +28,15 @@ V
 &src/main/java/com/app/model/Color.java,9\d\9da657757bbaf9a642ac3b3b0e11fe8d80a58f40
 N
 src/main/java/com/app/App.java,a\9\a92de6060a9826459008c30a183a878638848544
+w
+G.idea/sonarlint/issuestore/3/8/38d444f343647dcf9a8303b78f8a896991832e01,9\4\945ba3a9e286d27b2b690822654528779f455c59
+w
+G.idea/sonarlint/issuestore/4/4/442292b8a7efeabbe4cc176709b833b1792140ec,8\6\863e0292fd7e9b3e74dafd6cc01f73ba76346482
+d
+4src/test/java/com/app/config/AppTestBeansConfig.java,5\a\5a3f4b490aeaeaf7c88c994aaf741954e553b7aa
+ƒ
+Ssrc/test/java/com/app/data/json/deserializer/impl/CarsDataJsonDeserializerTest.java,2\7\27e0b0c8c23d188cbf45fe0be996877d59ac30b9
+`
+0src/main/java/com/app/config/AppBeansConfig.java,b\0\b07585c7ef233a279f149ade69626bfa38a6113d
+a
+1src/test/java/com/app/data/model/CarDataTest.java,b\c\bc90bf8915fb603c62826e8051f99d97d8d62145
