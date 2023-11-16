@@ -1,8 +1,0 @@
-
-G	java:S106"+Replace this use of System.out by a logger.(ΐζΥ8φ€π½1
-h
-java:S1128"KRemove this unused import 'com.app.data.json.converter.impl.GsonConverter'.(«Φ‹Α8Ω†υ½1
-Z
-java:S1128"8Remove this unused import 'com.app.data.model.CarsData'.(Αυωÿÿÿÿ8Ω†υ½1
-Z
-java:S1128"8Remove this unused import 'com.google.gson.GsonBuilder'.(”«ΰ¬ÿÿÿÿÿ8Ω†υ½1
