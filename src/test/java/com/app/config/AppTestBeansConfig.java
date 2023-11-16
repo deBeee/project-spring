@@ -4,7 +4,10 @@ import com.app.data.json.converter.JsonConverter;
 import com.app.data.json.converter.impl.GsonConverter;
 import com.app.data.json.deserializer.JsonDeserializer;
 import com.app.data.json.deserializer.impl.CarsDataJsonDeserializer;
+import com.app.data.model.CarData;
 import com.app.data.model.CarsData;
+import com.app.validation.Validator;
+import com.app.validation.impl.CarDataValidator;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.context.annotation.Bean;
@@ -31,5 +34,10 @@ public class AppTestBeansConfig {
     @Bean
     public JsonDeserializer<CarsData> jsonDeserializer(JsonConverter<CarsData> jsonConverter) {
         return new CarsDataJsonDeserializer(jsonConverter);
+    }
+
+    @Bean
+    public Validator<CarData> validator() {
+        return new CarDataValidator();
     }
 }
