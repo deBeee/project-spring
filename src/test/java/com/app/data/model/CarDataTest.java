@@ -28,8 +28,8 @@ public class CarDataTest {
                 "AUDI",
                 "Q8",
                 200,
-                Color.BLACK,
                 BigDecimal.ONE,
+                Color.BLACK,
                 List.of("A", "B")
         );
 

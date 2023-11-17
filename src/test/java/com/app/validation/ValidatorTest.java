@@ -14,6 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static com.app.Cars.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
@@ -26,15 +27,7 @@ public class ValidatorTest {
     @Test
     @DisplayName("When validation is ok")
     void test1() {
-        var carData = new CarData(
-                "AUDI",
-                "A",
-                200,
-                Color.BLACK,
-                BigDecimal.ONE,
-                List.of("A", "B")
-        );
-        assertThat(Validator.validate(carData, validator)).isTrue();
+        assertThat(Validator.validate(AUDI_CAR_DATA, validator)).isTrue();
     }
 
     @Test

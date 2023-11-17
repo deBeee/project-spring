@@ -24,6 +24,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static com.app.Cars.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
@@ -48,40 +49,15 @@ public class JsonFileToCarsConverterImplTest {
     @DisplayName("when data all data is correct")
     void test1() {
         Mockito.when(carsDataJsonDeserializer.fromJson(ArgumentMatchers.anyString()))
-                .thenReturn(new CarsData(List.of(
-                        new CarData(
-                                "AUDI",
-                                "A",
-                                200,
-                                Color.BLACK,
-                                BigDecimal.ONE,
-                                List.of("A", "B")
-                        ),
-                        new CarData(
-                                "BMW",
-                                "B",
-                                250,
-                                Color.WHITE,
-                                BigDecimal.TEN,
-                                List.of("A", "B", "C")
-                        )
-                )));
+                .thenReturn(new CarsData(List.of(AUDI_CAR_DATA, BMW_CAR_DATA)));
 
         assertThat(fileToCarsConverter.convert("cars.json"))
                 .hasSize(2);
     }
 
     @Test
-    @DisplayName("when not data all data is correct")
+    @DisplayName("when not all data is correct")
     void test2() {
-        var correctCar = new CarData(
-                "BMW",
-                "B",
-                250,
-                Color.WHITE,
-                BigDecimal.TEN,
-                List.of("A", "B", "C")
-        );
         Mockito.when(carsDataJsonDeserializer.fromJson(ArgumentMatchers.anyString()))
                 .thenReturn(new CarsData(List.of(
                         new CarData(
@@ -92,11 +68,11 @@ public class JsonFileToCarsConverterImplTest {
                                 BigDecimal.ONE,
                                 List.of("A", "B")
                         ),
-                        correctCar
+                        BMW_CAR_DATA
                 )));
 
         assertThat(fileToCarsConverter.convert("cars.json"))
                 .hasSize(1)
-                .containsOnly(correctCar.toCar());
+                .containsOnly(BMW_CAR_DATA.toCar());
     }
 }

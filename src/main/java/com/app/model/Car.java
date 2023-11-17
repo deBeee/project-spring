@@ -12,10 +12,10 @@ import java.util.List;
 @Builder
 @EqualsAndHashCode
 public class Car {
-    private final String make;
-    private final String model;
-    private final int speed;
-    private final Color color;
-    private final BigDecimal price;
-    private final List<String> equipment;
+    final String make;
+    final String model;
+    final int speed;
+    final BigDecimal price;
+    final Color color;
+    final List<String> equipment;
 }
