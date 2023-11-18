@@ -26,6 +26,7 @@ import java.util.List;
 
 import static com.app.Cars.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
 @ContextConfiguration(classes = AppTestBeansConfig.class)
@@ -48,7 +49,7 @@ public class JsonFileToCarsConverterImplTest {
     @Test
     @DisplayName("when data all data is correct")
     void test1() {
-        Mockito.when(carsDataJsonDeserializer.fromJson(ArgumentMatchers.anyString()))
+        when(carsDataJsonDeserializer.fromJson(ArgumentMatchers.anyString()))
                 .thenReturn(new CarsData(List.of(AUDI_CAR_DATA, BMW_CAR_DATA)));
 
         assertThat(fileToCarsConverter.convert("cars.json"))
@@ -58,7 +59,7 @@ public class JsonFileToCarsConverterImplTest {
     @Test
     @DisplayName("when not all data is correct")
     void test2() {
-        Mockito.when(carsDataJsonDeserializer.fromJson(ArgumentMatchers.anyString()))
+        when(carsDataJsonDeserializer.fromJson(ArgumentMatchers.anyString()))
                 .thenReturn(new CarsData(List.of(
                         new CarData(
                                 "audi",
