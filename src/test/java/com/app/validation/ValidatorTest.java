@@ -27,7 +27,7 @@ public class ValidatorTest {
     @Test
     @DisplayName("When validation is ok")
     void test1() {
-        assertThat(Validator.validate(AUDI_CAR_DATA, validator)).isTrue();
+        assertThat(Validator.validate(AUDI_1_CAR_DATA, validator)).isTrue();
     }
 
     @Test

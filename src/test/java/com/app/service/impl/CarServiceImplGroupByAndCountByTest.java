@@ -14,7 +14,7 @@ import static com.app.model.Mappers.toColorMapper;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CarServiceImplGroupByAndCountByTest {
-    private static final List<Car> CARS = List.of(AUDI_CAR, BMW_CAR, MAZDA_CAR);
+    private static final List<Car> CARS = List.of(AUDI_1_CAR, BMW_CAR, MAZDA_1_CAR);
     private static final CarService carService = new CarServiceImpl(CARS);
 
     @Test
@@ -23,9 +23,9 @@ public class CarServiceImplGroupByAndCountByTest {
         assertThat(carService.groupBy(toColorMapper))
                 .hasSize(3)
                 .containsAllEntriesOf(Map.of(
-                        Color.BLACK, List.of(AUDI_CAR),
+                        Color.BLACK, List.of(AUDI_1_CAR),
                         Color.WHITE, List.of(BMW_CAR),
-                        Color.BLUE, List.of(MAZDA_CAR)
+                        Color.BLUE, List.of(MAZDA_1_CAR)
                 ));
     }
 

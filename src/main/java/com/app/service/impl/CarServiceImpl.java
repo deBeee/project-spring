@@ -3,6 +3,7 @@ package com.app.service.impl;
 import com.app.model.Car;
 import com.app.model.Color;
 import com.app.service.CarService;
+import com.app.util.MinMax;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ public class CarServiceImpl implements CarService {
      * @param carComparator The criterion for sorting Car objects. It's an object that implements the
      * {@link Comparator<Car>} interface, which defines how two Car objects are compared to each other.
      * @return A list of Car objects sorted based on the given criterion.
+     * @throws IllegalArgumentException if car comparator is null.
      */
     @Override
     public List<Car> sort(Comparator<Car> carComparator) {
@@ -40,6 +42,7 @@ public class CarServiceImpl implements CarService {
      * @param speedMin The minimum speed (inclusive) of the cars to be included in the returned list.
      * @param speedMax The maximum speed (inclusive) of the cars to be included in the returned list.
      * @return A list of Car objects with speeds falling between the provided minimum and maximum values.
+     * @throws IllegalArgumentException if speed range is not correct.
      */
     @Override
     public List<Car> findAllBySpeedBetween(int speedMin, int speedMax) {
@@ -100,5 +103,48 @@ public class CarServiceImpl implements CarService {
                 .stream()
                 .collect(Collectors.groupingBy(classifier, Collectors.counting()));
     }
+
+    /**
+     * Groups the cars by a specified criteria and then finds the minimum and maximum values
+     * for each group based on another criteria.
+     * @param groupingFn a function that produces the key used to group cars.
+     * @param carComparator a comparator based on which min and max are determined.
+     * @return a map where keys are produced by the grouping function and values are MinMax objects
+     * containing the minimum and maximum values based on the comparator for each group.
+     * @param <T> the type of the grouping key.
+     * @see MinMax
+     * @throws IllegalArgumentException if any of the provided functions or comparator is null.
+     */
+    @Override
+    public <T> Map<T, MinMax<Car>> groupAndFindMinMaxByCriteria(Function<Car, T> groupingFn, Comparator<Car> carComparator) {
+        if(groupingFn == null) {
+            throw new IllegalArgumentException("Grouping function is null");
+        }
+
+        if(carComparator == null) {
+            throw new IllegalArgumentException("Car comparator is null");
+        }
+
+        return cars
+                .stream()
+                .collect(Collectors.groupingBy(
+                        groupingFn,
+                                Collectors.collectingAndThen(
+                                        Collectors.toList(),
+                                        groupedCars -> {
+                                            Car minCar = groupedCars
+                                                    .stream()
+                                                    .min(carComparator)
+                                                    .orElseThrow();
+                                            Car maxCar = groupedCars
+                                                    .stream()
+                                                    .max(carComparator)
+                                                    .orElseThrow();
+                                            return new MinMax<>(minCar, maxCar);
+                                        }
+                                )
+                ));
+    }
+
 
 }

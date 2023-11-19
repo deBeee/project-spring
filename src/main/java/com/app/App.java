@@ -1,10 +1,7 @@
 package com.app;
 
 import com.app.config.AppBeansConfig;
-import com.app.data.json.converter.impl.GsonConverter;
 import com.app.data.json.deserializer.impl.CarsDataJsonDeserializer;
-import com.app.data.model.CarsData;
-import com.google.gson.GsonBuilder;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class App {

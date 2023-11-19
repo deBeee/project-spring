@@ -2,9 +2,8 @@ package com.app.service.impl;
 
 import com.app.model.Car;
 import com.app.service.CarService;
-import org.assertj.core.api.Assertions;
-import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -19,17 +18,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 public class CarServiceImplSortTest {
-    private static final List<Car> CARS = List.of(AUDI_CAR, BMW_CAR, MAZDA_CAR);
+    private static final List<Car> CARS = List.of(AUDI_1_CAR, BMW_CAR, MAZDA_1_CAR);
     private static final CarService carService = new CarServiceImpl(CARS);
 
     private static Stream<Arguments> comparatorsWithSortedCars() {
         return Stream.of(
-                Arguments.of(byMakeComparator, List.of(AUDI_CAR, BMW_CAR, MAZDA_CAR)),
-                Arguments.of(byMakeComparatorDesc, List.of(MAZDA_CAR, BMW_CAR, AUDI_CAR)),
-                Arguments.of(byPriceComparator, List.of(AUDI_CAR, MAZDA_CAR, BMW_CAR)),
-                Arguments.of(byPriceComparatorDesc, List.of(BMW_CAR, MAZDA_CAR, AUDI_CAR)),
-                Arguments.of(bySpeedComparator, List.of(MAZDA_CAR, AUDI_CAR, BMW_CAR)),
-                Arguments.of(bySpeedComparatorDesc, List.of(BMW_CAR,  AUDI_CAR, MAZDA_CAR))
+                Arguments.of(byMakeComparator, List.of(AUDI_1_CAR, BMW_CAR, MAZDA_1_CAR)),
+                Arguments.of(byMakeComparatorDesc, List.of(MAZDA_1_CAR, BMW_CAR, AUDI_1_CAR)),
+                Arguments.of(byPriceComparator, List.of(AUDI_1_CAR, MAZDA_1_CAR, BMW_CAR)),
+                Arguments.of(byPriceComparatorDesc, List.of(BMW_CAR, MAZDA_1_CAR, AUDI_1_CAR)),
+                Arguments.of(bySpeedComparator, List.of(MAZDA_1_CAR, AUDI_1_CAR, BMW_CAR)),
+                Arguments.of(bySpeedComparatorDesc, List.of(BMW_CAR, AUDI_1_CAR, MAZDA_1_CAR))
         );
     }
 
