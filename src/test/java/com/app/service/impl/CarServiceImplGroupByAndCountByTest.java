@@ -30,7 +30,7 @@ public class CarServiceImplGroupByAndCountByTest {
     }
 
     @Test
-    @DisplayName("when cars are counter correctly by classifier")
+    @DisplayName("when cars are counted correctly by classifier")
     void test2() {
         assertThat(carService.countBy(toColorMapper))
                 .hasSize(3)

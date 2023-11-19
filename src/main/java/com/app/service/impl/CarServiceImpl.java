@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,6 +50,24 @@ public class CarServiceImpl implements CarService {
         return cars
                 .stream()
                 .filter(car -> car.hasSpeedBetween(speedMin, speedMax))
+                .toList();
+    }
+
+    /**
+     * Finds and returns a list of {@code Car} objects that match the specified
+     * criterion.
+     * @param criterion The predicate used to test each {@code Car} object.
+     * Only cars that satisfy this criterion will be included in the returned list.
+     * @return A list of {@code Car} objects that match the specified criterion.
+     * If no cars meet the criterion, an empty list is returned.
+     * @param <T> The type of the input to the predicate, which should match the
+     * type of elements this method operates on.
+     */
+    @Override
+    public List<Car> findAllBy(Predicate<Car> criterion) {
+        return cars
+                .stream()
+                .filter(criterion)
                 .toList();
     }
 
