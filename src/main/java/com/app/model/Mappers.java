@@ -8,5 +8,5 @@ public interface Mappers {
     Function<Car, Color> toColorMapper = car -> car.color;
     Function<Car, String> toMakeMapper = car -> car.make;
     Function<Car, BigDecimal> toPriceMapper = car -> car.price;
-    ToIntFunction<Car> toSpeedMapper = car -> car.speed;
+    Function<Car, Integer> toSpeedMapper = car -> car.speed;
 }

@@ -14,7 +14,10 @@ public interface CarService {
     List<Car> sort(Comparator<Car> carComparator);
     List<Car> findAllBySpeedBetween(int speedMin, int speedMax);
     List<Car> findAllBy(Predicate<Car> criterion);
+
     <T> Map<T, List<Car>> groupBy(Function<Car, T> classifier);
     <T> Map<T, Long> countBy(Function<Car, T> classifier);
     <T> Map<T, MinMax<Car>> groupAndFindMinMaxByCriteria(Function<Car, T> groupingFn, Comparator<Car> carComparator);
+    <T, U> Map<T, MinMax<List<Car>>> groupAndFindMinMaxByCriteria(
+            Function<Car, T> groupingFn, Function<Car, U> minMaxGroupingFn, Comparator<U> minMaxComparator);
 }

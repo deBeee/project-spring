@@ -1,7 +1,6 @@
 package com.app.service.impl;
 
 import com.app.model.Car;
-import com.app.model.Color;
 import com.app.service.CarService;
 import com.app.util.MinMax;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +12,8 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.*;
 
 @Service
 @RequiredArgsConstructor
@@ -127,10 +128,10 @@ public class CarServiceImpl implements CarService {
 
         return cars
                 .stream()
-                .collect(Collectors.groupingBy(
+                .collect(groupingBy(
                         groupingFn,
-                                Collectors.collectingAndThen(
-                                        Collectors.toList(),
+                                collectingAndThen(
+                                        toList(),
                                         groupedCars -> {
                                             Car minCar = groupedCars
                                                     .stream()
@@ -146,5 +147,57 @@ public class CarServiceImpl implements CarService {
                 ));
     }
 
+    /**
+     * Groups the cars by a specified criteria and then finds the minimum and maximum values
+     * for each group based on another criteria.
+     * @param groupingFn a function that produces the key used to group cars.
+     * @param minMaxGroupingFn a function that produces the key used to group cars for each group.
+     * @param minMaxComparator a comparator based on which min and max are determined.
+     * @return a map where keys are produced by the grouping function and values are MinMax objects
+     * containing the minimum and maximum values based on the comparator for each group.
+     * @param <T> the type of the grouping key.
+     * @see MinMax
+     * @throws IllegalArgumentException if any of the provided functions or comparator is null.
+     */
+    @Override
+    public <T, U> Map<T, MinMax<List<Car>>> groupAndFindMinMaxByCriteria(
+            Function<Car, T> groupingFn, Function<Car, U> minMaxGroupingFn, Comparator<U> minMaxComparator) {
+        if(groupingFn == null) {
+            throw new IllegalArgumentException("Grouping function is null");
+        }
 
+        if(minMaxGroupingFn == null) {
+            throw new IllegalArgumentException("Min max grouping function is null");
+        }
+
+        if(minMaxComparator == null){
+            throw new IllegalArgumentException("Min max comparator is null");
+        }
+
+        return cars
+                .stream()
+                .collect(groupingBy(
+                        groupingFn,
+                        collectingAndThen(
+                                groupingBy(minMaxGroupingFn),
+                                groupedByMinMaxFnCars -> {
+                                    var minKey = groupedByMinMaxFnCars
+                                            .keySet()
+                                            .stream()
+                                            .min(minMaxComparator)
+                                            .orElseThrow();
+                                    var maxKey = groupedByMinMaxFnCars
+                                            .keySet()
+                                            .stream()
+                                            .max(minMaxComparator)
+                                            .orElseThrow();
+
+                                    return new MinMax<>(
+                                            groupedByMinMaxFnCars.get(minKey),
+                                            groupedByMinMaxFnCars.get(maxKey)
+                                    );
+                                }
+                        )
+                ));
+    }
 }
