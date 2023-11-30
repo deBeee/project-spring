@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -21,5 +22,16 @@ public class Car {
 
     public boolean hasSpeedBetween(int speedMin, int speedMax) {
         return speedMin <= speed && speed <= speedMax;
+    }
+    public Car sortEquipment(Comparator<String> equipmentComparator) {
+        return Car
+                .builder()
+                .make(make)
+                .model(model)
+                .speed(speed)
+                .color(color)
+                .price(price)
+                .equipment(equipment.stream().sorted(equipmentComparator).toList())
+                .build();
     }
 }

@@ -247,4 +247,21 @@ public class CarServiceImpl implements CarService {
 
         return new Statistics<>(min, max, avg);
     }
+
+    /**
+     * Sorts the equipment list of each car based on the provided comparator.
+     * @param equipmentComparator A Comparator<String> used to sort the equipment list of each other.
+     * @return A list of Car objects with sorted equipment lists.
+     */
+    @Override
+    public List<Car> sortEquipment(Comparator<String> equipmentComparator) {
+        if(equipmentComparator == null){
+            throw new IllegalArgumentException("Comparator is null");
+        }
+
+        return cars
+                .stream()
+                .map(car -> car.sortEquipment(equipmentComparator))
+                .toList();
+    }
 }

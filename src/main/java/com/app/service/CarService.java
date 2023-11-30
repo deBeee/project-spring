@@ -1,7 +1,6 @@
 package com.app.service;
 
 import com.app.model.Car;
-import com.app.model.Color;
 import com.app.util.MinMax;
 import com.app.util.Statistics;
 
@@ -22,4 +21,5 @@ public interface CarService {
     <T, U> Map<T, MinMax<List<Car>>> groupAndFindMinMaxByCriteria(
             Function<Car, T> groupingFn, Function<Car, U> minMaxGroupingFn, Comparator<U> minMaxComparator);
     <T extends Comparable<T>>Statistics<T> getStatistics(Function<Car, T> extractor);
+    List<Car> sortEquipment(Comparator<String> equipmentComparator);
 }

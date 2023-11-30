@@ -10,19 +10,17 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigDecimal;
-import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static com.app.Cars.*;
 import static com.app.model.Color.*;
-import static com.app.model.Comparators.*;
 import static com.app.model.Mappers.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-public class CarServiceGetStatisticsTest {
+public class CarServiceImplGetStatisticsTest {
     private static final List<Car> CARS = List.of(AUDI_1_CAR, BMW_CAR, MAZDA_1_CAR);
     private static final CarService carService = new CarServiceImpl(CARS);
 
