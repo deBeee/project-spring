@@ -215,6 +215,11 @@ public class CarServiceImpl implements CarService {
      */
     @Override
     public <T extends Comparable<T>> Statistics<T> getStatistics(Function<Car, T> extractor) {
+
+        if(extractor == null){
+            throw new IllegalArgumentException("Extractor is null");
+        }
+
         T min = cars
                 .stream()
                 .map(extractor)
@@ -230,8 +235,13 @@ public class CarServiceImpl implements CarService {
         BigDecimal avg = cars
                 .stream()
                 .map(extractor)
-                .filter(v -> v instanceof BigDecimal)
-                .map(v -> (BigDecimal)v)
+                .filter(v -> v instanceof Number)
+                .map(v -> {
+                    if(v instanceof BigDecimal vv){
+                        return vv;
+                    }
+                    return new BigDecimal(v.toString());
+                })
                 .reduce(BigDecimal.ZERO, BigDecimal::add)
                 .divide(BigDecimal.valueOf(cars.size()), RoundingMode.HALF_UP);
 
