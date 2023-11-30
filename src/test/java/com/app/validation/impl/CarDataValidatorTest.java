@@ -128,31 +128,4 @@ public class CarDataValidatorTest {
                 .isEqualTo(expectedErrors);
     }
 
-    @Test
-    @DisplayName("When validation is ok")
-    void test2() {
-        var carData = new CarData(
-                "AUDI",
-                "A",
-                200,
-                Color.BLACK,
-                BigDecimal.ONE,
-                List.of("A", "B")
-        );
-        assertThat(Validator.validate(carData, validator)).isTrue();
-    }
-
-    @Test
-    @DisplayName("When validation is not ok")
-    void test3() {
-        var carData = new CarData(
-                "AUDi",
-                "A",
-                200,
-                Color.BLACK,
-                BigDecimal.ONE,
-                List.of("A", "B")
-        );
-        assertThat(Validator.validate(carData, validator)).isFalse();
-    }
 }

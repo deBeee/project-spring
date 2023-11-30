@@ -3,9 +3,12 @@ package com.app.service.impl;
 import com.app.model.Car;
 import com.app.service.CarService;
 import com.app.util.MinMax;
+import com.app.util.Statistics;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -64,8 +67,6 @@ public class CarServiceImpl implements CarService {
      * Only cars that satisfy this criterion will be included in the returned list.
      * @return A list of {@code Car} objects that match the specified criterion.
      * If no cars meet the criterion, an empty list is returned.
-     * @param <T> The type of the input to the predicate, which should match the
-     * type of elements this method operates on.
      */
     @Override
     public List<Car> findAllBy(Predicate<Car> criterion) {
@@ -199,5 +200,41 @@ public class CarServiceImpl implements CarService {
                                 }
                         )
                 ));
+    }
+
+    /**
+     * Computes the minimum, maximum, and average values for a list of cars.
+     * This method accepts a function that extracts a value of type T from each car.
+     * It computes and returns the minimum, maximum, and average of these values.
+     * The method is generic and can work with any field of the Car class that implements the Comparable
+     * interface. The average is calculated specifically for BigDecimal values.
+     *
+     * @param extractor a function that extracts the value of type T from a Car object.
+     * @param <T> the type of the field to be analyzed. This type must implement the Comparable interface.
+     * @return an instance of the Statistics class containing the min, max, and average values.
+     */
+    @Override
+    public <T extends Comparable<T>> Statistics<T> getStatistics(Function<Car, T> extractor) {
+        T min = cars
+                .stream()
+                .map(extractor)
+                .min(Comparator.naturalOrder())
+                .orElse(null);
+
+        T max = cars
+                .stream()
+                .map(extractor)
+                .max(Comparator.naturalOrder())
+                .orElse(null);
+
+        BigDecimal avg = cars
+                .stream()
+                .map(extractor)
+                .filter(v -> v instanceof BigDecimal)
+                .map(v -> (BigDecimal)v)
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .divide(BigDecimal.valueOf(cars.size()), RoundingMode.HALF_UP);
+
+        return new Statistics<>(min, max, avg);
     }
 }
