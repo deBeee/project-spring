@@ -1,6 +1,7 @@
 package com.app.service.impl;
 
 import com.app.model.Car;
+import com.app.model.Mappers;
 import com.app.service.CarService;
 import com.app.util.MinMax;
 import com.app.util.Statistics;
@@ -9,13 +10,12 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import static com.app.model.Mappers.toEquipmentMapper;
 import static java.util.stream.Collectors.*;
 
 @Service
@@ -263,5 +263,40 @@ public class CarServiceImpl implements CarService {
                 .stream()
                 .map(car -> car.sortEquipment(equipmentComparator))
                 .toList();
+    }
+
+    /**
+     * Returns a map where each key is a component and the value is a list of cars
+     * that have this component. The map is sorted based on the provided comparator for value.
+     *
+     * @param carsComparator A Comparator<List<Car>> used to sort the map values.
+     * @return A Map<String, List<Car>> with each component and the cars that have it, sorted based on the carsComparator.
+     */
+    @Override
+    public Map<String, List<Car>> groupByComponent(Comparator<List<Car>> carsComparator) {
+        if(carsComparator == null){
+            throw new IllegalArgumentException("Comparator is null");
+        }
+
+        return cars
+                .stream()
+                .flatMap(car -> toEquipmentMapper
+                        .apply(car)
+                        .stream()
+                        .map(eq -> new AbstractMap.SimpleEntry<>(eq, car)))
+                .collect(groupingBy(
+                        Map.Entry::getKey,
+                        Collectors.mapping(Map.Entry::getValue, Collectors.toList()
+                        )
+                ))
+                .entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue(carsComparator))
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (v1, v2) -> v1,
+                        LinkedHashMap::new
+                ));
     }
 }
