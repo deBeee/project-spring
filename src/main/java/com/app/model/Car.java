@@ -1,5 +1,6 @@
 package com.app.model;
 
+import com.app.util.CarCriteria;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -80,4 +81,16 @@ public class Car {
     public int calculateSpeedDifference(int otherSpeed) {
         return abs(this.speed - otherSpeed);
     }
+
+    public boolean matchesCriteria(CarCriteria carCriteria) {
+        var matchesMake = this.make.matches(carCriteria.requiredMakeRegex());
+        var matchesModel = this.model.matches(carCriteria.requiredModelRegex());
+        var matchesSpeed = hasSpeedBetween(carCriteria.speedMin(), carCriteria.speedMax());
+        var matchesPrice = carCriteria.priceMin().compareTo(this.price) <= 0
+                && this.price.compareTo(carCriteria.priceMax()) <= 0;
+        var matchesColor = this.color.equals(carCriteria.color());
+        var containsEquipment = this.equipment.containsAll(carCriteria.requiredEquipment());
+        return matchesMake && matchesModel && matchesSpeed && matchesPrice && matchesColor && containsEquipment;
+    }
 }
+
