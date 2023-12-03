@@ -92,5 +92,17 @@ public class Car {
         var containsEquipment = this.equipment.containsAll(carCriteria.requiredEquipment());
         return matchesMake && matchesModel && matchesSpeed && matchesPrice && matchesColor && containsEquipment;
     }
+
+    @Override
+    public String toString() {
+        return "Car: [%s. %s, %d, %s, %s, %s]".formatted(
+                make,
+                model,
+                speed,
+                price,
+                color,
+                String.join(", ", equipment)
+        );
+    }
 }
 

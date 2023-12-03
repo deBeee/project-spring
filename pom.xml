@@ -30,6 +30,7 @@
         <disruptor.version>3.4.4</disruptor.version>
         <slf4j.version>2.0.7</slf4j.version>
         <log4j.slf4j2.impl.version>2.20.0</log4j.slf4j2.impl.version>
+        <j2html.version>1.6.0</j2html.version>
     </properties>
 
     <dependencies>
@@ -118,6 +119,11 @@
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>
             <version>${disruptor.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.j2html</groupId>
+            <artifactId>j2html</artifactId>
+            <version>${j2html.version}</version>
         </dependency>
     </dependencies>
 
