@@ -299,4 +299,31 @@ public class CarServiceImpl implements CarService {
                         LinkedHashMap::new
                 ));
     }
+
+    /**
+     * Finds cars from a list that are closest to a specified comparison criteria.
+     * This method processes a list of cars and returns those that are closest
+     * according to a comparison criteria defined by the provided Comparator.
+     * In case more than one car matches the criteria equally, all such cars are returned.
+     *
+     * @param carComparator the Comparator defining the comparison criteria for cars.
+     * @return a list of cars closest according to the specified criteria.
+     *         Returns an empty list if no car matches the criteria.
+     */
+    @Override
+    public List<Car> findCarsByCriteria(Comparator<Car> carComparator) {
+        if(carComparator == null){
+            throw new IllegalArgumentException("Comparator is null");
+        }
+
+        var minCar = cars
+                .stream()
+                .min(carComparator)
+                .orElseThrow(() -> new IllegalArgumentException("Cannot find car by criteria"));
+
+        return cars
+                .stream()
+                .filter(car -> carComparator.compare(car, minCar) == 0)
+                .toList();
+    }
 }

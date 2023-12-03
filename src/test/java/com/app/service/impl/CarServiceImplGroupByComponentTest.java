@@ -38,6 +38,7 @@ public class CarServiceImplGroupByComponentTest {
                 "C", List.of(BMW_CAR)
         );
 
+        
         Assertions.assertThat(carService.groupByComponent(comparator)).isEqualTo(expectedGroupedCars);
     }
 

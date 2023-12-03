@@ -23,4 +23,5 @@ public interface CarService {
     <T extends Comparable<T>>Statistics<T> getStatistics(Function<Car, T> extractor);
     List<Car> sortEquipment(Comparator<String> equipmentComparator);
     Map<String, List<Car>> groupByComponent(Comparator<List<Car>> carsComparator);
+    List<Car> findCarsByCriteria(Comparator<Car> carComparator);
 }
