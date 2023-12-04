@@ -95,7 +95,7 @@ public class Car {
 
     @Override
     public String toString() {
-        return "Car: [%s. %s, %d, %s, %s, %s]".formatted(
+        return "Car: [%s, %s, %d, %s, %s, %s]".formatted(
                 make,
                 model,
                 speed,

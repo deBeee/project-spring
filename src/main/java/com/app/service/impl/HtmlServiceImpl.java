@@ -3,6 +3,7 @@ package com.app.service.impl;
 import com.app.service.HtmlService;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import static j2html.TagCreator.*;
@@ -28,7 +29,7 @@ public class HtmlServiceImpl implements HtmlService {
     }
 
     @Override
-    public <K, V> String toHtmlPairs(String header, Map<K, V> pairs) {
+    public <K, V> String toHtmlPairs(String header, LinkedHashMap<K, V> pairs) {
         return div(
                 h2(header),
                 ol()
