@@ -18,7 +18,7 @@ public class HtmlServiceImpl implements HtmlService {
     }
 
     @Override
-    public <T> String toHtmlMany(String header, List<T> items) {
+    public <T> String manyToHtml(String header, List<T> items) {
         return div(
                 h2(header),
                 ol()
@@ -29,7 +29,7 @@ public class HtmlServiceImpl implements HtmlService {
     }
 
     @Override
-    public <K, V> String toHtmlPairs(String header, Map<K, V> pairs) {
+    public <K, V> String pairsToHtml(String header, Map<K, V> pairs) {
         return div(
                 h2(header),
                 ol()

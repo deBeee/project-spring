@@ -20,8 +20,7 @@ public class CarRepositoryImpl implements CarRepository {
     private final FileToCarsConverter fileToCarsConverter;
 
     private List<Car> cars;
-
-    //@PostConstruct
+    @PostConstruct
     void init() {
         cars = fileToCarsConverter.convert(filename);
     }

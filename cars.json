@@ -21,6 +21,50 @@
         "AIR CONDITIONING",
         "BLUETOOTH"
       ]
+    },
+    {
+      "make": "HONDA",
+      "model": "CIVIC",
+      "speed": 245,
+      "color": "RED",
+      "price": 280,
+      "equipment": [
+        "V-TEC ENGINE",
+        "INSANE BRAKES"
+      ]
+    },
+    {
+      "make": "SEAT",
+      "model": "Q8",
+      "speed": 260,
+      "color": "BLUE",
+      "price": 300,
+      "equipment": [
+        "AIR CONDITIONING",
+        "BLUETOOTH"
+      ]
+    },
+    {
+      "make": "AUDI",
+      "model": "Leon",
+      "speed": 290,
+      "color": "GREEN",
+      "price": 340,
+      "equipment": [
+        "AUTOMATIC TRANSMISSION",
+        "4-WHEEL DRIVE"
+      ]
+    },
+    {
+      "make": "KIA",
+      "model": "Sportage",
+      "speed": 240,
+      "color": "BLACK",
+      "price": 220,
+      "equipment": [
+        "MANUAL TRANSMISSION",
+        "FRONT WHEEL DRIVE"
+      ]
     }
   ]
 }

@@ -29,7 +29,7 @@ public class HtmlServiceImplTest {
     void test2() {
         var expectedHtml
                 = "<div><h2>Cars</h2><ol><li>Car: [AUDI, A, 200, 1, BLACK, A, B]</li><li>Car: [AUDI, AA, 210, 10, BLACK, A, C]</li></ol></div>";
-        assertThat(htmlService.toHtmlMany("Cars", List.of(AUDI_1_CAR, AUDI_2_CAR)))
+        assertThat(htmlService.manyToHtml("Cars", List.of(AUDI_1_CAR, AUDI_2_CAR)))
                 .isEqualTo(expectedHtml);
     }
 
@@ -41,7 +41,7 @@ public class HtmlServiceImplTest {
         var headerItem = "<div><h2>Cars</h2>";
         var firstItem = "<li>A, [Car: [AUDI, A, 200, 1, BLACK, A, B], Car: [AUDI, AA, 210, 10, BLACK, A, C]]</li>";
         var secondItem = "<li>B, [Car: [AUDI, A, 200, 1, BLACK, A, B]]</li>";
-        assertThat(htmlService.toHtmlPairs("Cars", Map.of(
+        assertThat(htmlService.pairsToHtml("Cars", Map.of(
                 "A", List.of(AUDI_1_CAR, AUDI_2_CAR),
                 "B", List.of(AUDI_1_CAR)
         )))

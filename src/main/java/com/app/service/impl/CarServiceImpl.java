@@ -2,6 +2,7 @@ package com.app.service.impl;
 
 import com.app.model.Car;
 import com.app.model.Mappers;
+import com.app.model.Predicates;
 import com.app.repository.CarRepository;
 import com.app.service.CarService;
 import com.app.service.EmailService;
@@ -18,6 +19,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import static com.app.model.Comparators.*;
 import static com.app.model.Mappers.toEquipmentMapper;
 import static java.util.stream.Collectors.*;
 
@@ -327,7 +329,7 @@ public class CarServiceImpl implements CarService {
      *         Returns an empty list if no car matches the criteria.
      */
     @Override
-    public List<Car> findCarsByCriteria(Comparator<Car> carComparator) {
+    public List<Car> findCarsClosestToCriteria(Comparator<Car> carComparator) {
         if(carComparator == null){
             throw new IllegalArgumentException("Comparator is null");
         }
@@ -348,5 +350,28 @@ public class CarServiceImpl implements CarService {
     @Override
     public void sendReport(String to, String subject) {
 
+        var htmlContent = """
+                        <html>
+                            <body>
+                                <main id="main">
+                                    %s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n
+                                </main>
+                            </body>
+                        <html>
+                """.formatted(
+                htmlService.manyToHtml("Result 1", sort(byMakeComparator)),
+                htmlService.manyToHtml("Result 2", findAllBySpeedBetween(100, 200)),
+                htmlService.manyToHtml("Result 3", findAllBy(Predicates.hasSpeedBetweenPredicate(100, 200))),
+                htmlService.pairsToHtml("Result 4", groupBy(Mappers.toColorMapper)),
+                htmlService.pairsToHtml("Result 5", countBy(Mappers.toPriceMapper)),
+                htmlService.pairsToHtml("Result 6", groupAndFindMinMaxByCriteria(Mappers.toColorMapper, bySpeedComparator)),
+                htmlService.pairsToHtml("Result 7", groupAndFindMinMaxByCriteria(
+                        Mappers.toColorMapper, Mappers.toSpeedMapper, Comparator.naturalOrder())),
+                htmlService.toHtml("Result 8", getStatistics(Mappers.toSpeedMapper)),
+                htmlService.manyToHtml("Result 9", sortEquipment(Comparator.naturalOrder())),
+                htmlService.pairsToHtml("Result 10", groupByComponent(Comparator.comparingInt(List::size))),
+                htmlService.manyToHtml("Result 11", findCarsClosestToCriteria(byPriceComparator))
+        );
+        emailService.send(to, subject, htmlContent);
     }
 }
