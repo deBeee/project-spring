@@ -2,7 +2,10 @@ package com.app.service.impl;
 
 import com.app.model.Car;
 import com.app.model.Mappers;
+import com.app.repository.CarRepository;
 import com.app.service.CarService;
+import com.app.service.EmailService;
+import com.app.service.HtmlService;
 import com.app.util.MinMax;
 import com.app.util.Statistics;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +24,9 @@ import static java.util.stream.Collectors.*;
 @Service
 @RequiredArgsConstructor
 public class CarServiceImpl implements CarService {
-    private final List<Car> cars;
+    private final CarRepository carRepository;
+    private final EmailService emailService;
+    private final HtmlService htmlService;
 
     /**
      * Sorts a list of Car objects based on the provided criterion.
@@ -35,7 +40,8 @@ public class CarServiceImpl implements CarService {
         if(carComparator == null) {
             throw new IllegalArgumentException("Comparator is null");
         }
-        return cars
+        return carRepository
+                .getCars()
                 .stream()
                 .sorted(carComparator)
                 .toList();
@@ -54,7 +60,8 @@ public class CarServiceImpl implements CarService {
             throw new IllegalArgumentException("Speed range is not correct");
         }
 
-        return cars
+        return carRepository
+                .getCars()
                 .stream()
                 .filter(car -> car.hasSpeedBetween(speedMin, speedMax))
                 .toList();
@@ -70,7 +77,8 @@ public class CarServiceImpl implements CarService {
      */
     @Override
     public List<Car> findAllBy(Predicate<Car> criterion) {
-        return cars
+        return carRepository
+                .getCars()
                 .stream()
                 .filter(criterion)
                 .toList();
@@ -86,7 +94,8 @@ public class CarServiceImpl implements CarService {
      */
     @Override
     public <T> Map<T, List<Car>> groupBy(Function<Car, T> classifier) {
-        return cars
+        return carRepository
+                .getCars()
                 .stream()
                 .collect(Collectors.groupingBy(classifier));
     }
@@ -101,7 +110,8 @@ public class CarServiceImpl implements CarService {
      */
     @Override
     public <T> Map<T, Long> countBy(Function<Car, T> classifier) {
-        return cars
+        return carRepository
+                .getCars()
                 .stream()
                 .collect(Collectors.groupingBy(classifier, Collectors.counting()));
     }
@@ -127,7 +137,8 @@ public class CarServiceImpl implements CarService {
             throw new IllegalArgumentException("Car comparator is null");
         }
 
-        return cars
+        return carRepository
+                .getCars()
                 .stream()
                 .collect(groupingBy(
                         groupingFn,
@@ -175,7 +186,8 @@ public class CarServiceImpl implements CarService {
             throw new IllegalArgumentException("Min max comparator is null");
         }
 
-        return cars
+        return carRepository
+                .getCars()
                 .stream()
                 .collect(groupingBy(
                         groupingFn,
@@ -220,6 +232,8 @@ public class CarServiceImpl implements CarService {
             throw new IllegalArgumentException("Extractor is null");
         }
 
+        var cars = carRepository.getCars();
+
         T min = cars
                 .stream()
                 .map(extractor)
@@ -259,7 +273,8 @@ public class CarServiceImpl implements CarService {
             throw new IllegalArgumentException("Comparator is null");
         }
 
-        return cars
+        return carRepository
+                .getCars()
                 .stream()
                 .map(car -> car.sortEquipment(equipmentComparator))
                 .toList();
@@ -278,7 +293,8 @@ public class CarServiceImpl implements CarService {
             throw new IllegalArgumentException("Comparator is null");
         }
 
-        return cars
+        return carRepository
+                .getCars()
                 .stream()
                 .flatMap(car -> toEquipmentMapper
                         .apply(car)
@@ -316,6 +332,8 @@ public class CarServiceImpl implements CarService {
             throw new IllegalArgumentException("Comparator is null");
         }
 
+        var cars = carRepository.getCars();
+
         var minCar = cars
                 .stream()
                 .min(carComparator)
@@ -325,5 +343,10 @@ public class CarServiceImpl implements CarService {
                 .stream()
                 .filter(car -> carComparator.compare(car, minCar) == 0)
                 .toList();
+    }
+
+    @Override
+    public void sendReport(String to, String subject) {
+
     }
 }

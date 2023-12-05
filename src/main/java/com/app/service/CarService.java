@@ -24,4 +24,5 @@ public interface CarService {
     List<Car> sortEquipment(Comparator<String> equipmentComparator);
     Map<String, List<Car>> groupByComponent(Comparator<List<Car>> carsComparator);
     List<Car> findCarsByCriteria(Comparator<Car> carComparator);
+    void sendReport(String to, String subject);
 }

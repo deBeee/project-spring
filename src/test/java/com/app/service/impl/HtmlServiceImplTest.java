@@ -6,11 +6,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.app.Cars.AUDI_1_CAR;
 import static com.app.Cars.AUDI_2_CAR;
-import static java.util.Map.entry;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HtmlServiceImplTest {

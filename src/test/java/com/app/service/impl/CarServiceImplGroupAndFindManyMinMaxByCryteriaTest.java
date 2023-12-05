@@ -2,10 +2,18 @@ package com.app.service.impl;
 
 import com.app.model.Car;
 import com.app.model.Color;
+import com.app.repository.CarRepository;
 import com.app.service.CarService;
 import com.app.util.MinMax;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.Comparator;
 import java.util.List;
@@ -18,10 +26,22 @@ import static com.app.model.Mappers.*;
 import static java.util.Comparator.naturalOrder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
+import static org.mockito.Mockito.when;
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class CarServiceImplGroupAndFindManyMinMaxByCryteriaTest {
-    private static final List<Car> CARS = List.of(AUDI_1_CAR, AUDI_2_CAR, AUDI_3_CAR, BMW_CAR, MAZDA_1_CAR, MAZDA_2_CAR);
-    private static final CarService carService = new CarServiceImpl(CARS);
+    @Mock
+    private CarRepository carRepository;
+
+    @InjectMocks
+    private CarServiceImpl carService;
+
+    @BeforeEach
+    void beforeEach() {
+        var CARS = List.of(AUDI_1_CAR, AUDI_2_CAR, AUDI_3_CAR, BMW_CAR, MAZDA_1_CAR, MAZDA_2_CAR);
+        when(carRepository.getCars())
+                .thenReturn(CARS);
+    }
 
     @Test
     @DisplayName("when grouping function is null")
