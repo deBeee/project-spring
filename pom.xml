@@ -31,6 +31,7 @@
         <slf4j.version>2.0.7</slf4j.version>
         <log4j.slf4j2.impl.version>2.20.0</log4j.slf4j2.impl.version>
         <j2html.version>1.6.0</j2html.version>
+        <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
     </properties>
 
     <dependencies>
@@ -124,6 +125,11 @@
             <groupId>com.j2html</groupId>
             <artifactId>j2html</artifactId>
             <version>${j2html.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <version>${javax.annotation-api.version}</version>
         </dependency>
     </dependencies>
 

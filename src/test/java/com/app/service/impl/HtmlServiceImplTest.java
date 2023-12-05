@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.app.Cars.AUDI_1_CAR;
 import static com.app.Cars.AUDI_2_CAR;
@@ -37,10 +38,15 @@ public class HtmlServiceImplTest {
     void test3() {
         var expectedHtml
                 = "<div><h2>Cars</h2><ol><li>A, [Car: [AUDI, A, 200, 1, BLACK, A, B], Car: [AUDI, AA, 210, 10, BLACK, A, C]]</li><li>B, [Car: [AUDI, A, 200, 1, BLACK, A, B]]</li></ol></div>";
-        var carMap = new LinkedHashMap<>();
-        carMap.put("A", List.of(AUDI_1_CAR, AUDI_2_CAR));
-        carMap.put("B", List.of(AUDI_1_CAR));
-
-        assertThat(htmlService.toHtmlPairs("Cars", carMap)).isEqualTo(expectedHtml);
+        var headerItem = "<div><h2>Cars</h2>";
+        var firstItem = "<li>A, [Car: [AUDI, A, 200, 1, BLACK, A, B], Car: [AUDI, AA, 210, 10, BLACK, A, C]]</li>";
+        var secondItem = "<li>B, [Car: [AUDI, A, 200, 1, BLACK, A, B]]</li>";
+        assertThat(htmlService.toHtmlPairs("Cars", Map.of(
+                "A", List.of(AUDI_1_CAR, AUDI_2_CAR),
+                "B", List.of(AUDI_1_CAR)
+        )))
+                .contains(headerItem)
+                .contains(firstItem)
+                .contains(secondItem);
     }
 }

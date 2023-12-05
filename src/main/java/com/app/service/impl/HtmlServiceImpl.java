@@ -29,7 +29,7 @@ public class HtmlServiceImpl implements HtmlService {
     }
 
     @Override
-    public <K, V> String toHtmlPairs(String header, LinkedHashMap<K, V> pairs) {
+    public <K, V> String toHtmlPairs(String header, Map<K, V> pairs) {
         return div(
                 h2(header),
                 ol()
